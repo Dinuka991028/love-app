@@ -1,0 +1,90 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LoveApplication</title>
+
+<style>
+body{
+    margin:0;
+    background:#0d1117;
+    color:#00ff88;
+    font-family:Consolas,monospace;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+#terminal{
+    width:700px;
+    max-width:90%;
+    background:#161b22;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 20px rgba(0,255,136,.25);
+    white-space:pre-wrap;
+    font-size:18px;
+}
+.cursor{
+    display:inline-block;
+    width:10px;
+    background:#00ff88;
+    animation:blink .8s infinite;
+}
+@keyframes blink{
+    50%{opacity:0;}
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<script>
+
+const text =
+`$ java LoveApplication
+
+Starting LoveApplication...
+
+Loading modules...
+Loading memories...
+Connecting to Eterna ❤️
+Connection successful.
+
+---------------------------------------
+
+Hello, Eterna ❤️
+
+You are the best thing
+that ever happened to me.
+
+Status : RUNNING
+Heart  : ❤️❤️❤️❤️❤️
+Love   : Infinite ♾️
+
+I Love You Forever ❤️`;
+
+let i=0;
+const terminal=document.getElementById("terminal");
+
+function type(){
+    if(i<text.length){
+        terminal.innerHTML=text.substring(0,i)+'<span class="cursor"></span>';
+        i++;
+        setTimeout(type,40);
+    }else{
+        terminal.innerHTML=text+'<span class="cursor"></span>';
+    }
+}
+
+type();
+
+</script>
+
+</body>
+</html>
+```
