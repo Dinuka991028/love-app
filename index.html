@@ -28,22 +28,15 @@ body{
     background:#161b22;
     padding:18px;
     border-radius:12px;
-    box-shadow:0 0 15px rgba(0,255,136,.2);
     white-space:pre-wrap;
     font-size:14px;
-    min-height:300px;
+    min-height:280px;
 }
 
 .question-box{
     text-align:center;
-    color:#fff;
-    display:none;
     margin-top:15px;
-    position:relative;
-}
-
-h3{
-    font-size:16px;
+    display:none;
 }
 
 button{
@@ -54,25 +47,18 @@ button{
     border:none;
     border-radius:10px;
     cursor:pointer;
+    position:relative;
 }
 
 #yesBtn{
     background:#00ff88;
     color:#000;
+    transition:all 0.3s ease;
 }
 
-/* 💔 NO BUTTON (tiny + escaping) */
 #noBtn{
     background:#ff4d4d;
     color:#fff;
-    position:absolute;
-    width:70px;
-    padding:8px;
-    font-size:12px;
-    border-radius:8px;
-    transition:0.1s;
-    left:50%;
-    top:120px;
 }
 
 .cursor{
@@ -82,11 +68,55 @@ button{
     animation:blink .8s infinite;
 }
 
-@keyframes blink{
-    50%{opacity:0;}
+@keyframes blink{50%{opacity:0;}}
+
+.kiss,.rainText,.firework{
+    position:fixed;
+}
+
+.kiss{
+    top:-20px;
+    font-size:22px;
+    animation:fall linear forwards;
+    z-index:9999;
+}
+
+.rainText{
+    top:-20px;
+    font-size:16px;
+    color:#fff;
+    font-weight:bold;
+    animation:fall linear forwards;
+    z-index:9998;
+}
+
+@keyframes fall{
+    to{transform:translateY(110vh);opacity:0;}
+}
+
+.firework{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    z-index:9999;
+    animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+    0%{transform:translate(0,0);opacity:1;}
+    100%{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
+.shake{animation:shake 0.4s;}
+
+@keyframes shake{
+    0%{transform:translate(0,0);}
+    25%{transform:translate(5px,-5px);}
+    50%{transform:translate(-5px,5px);}
+    75%{transform:translate(5px,5px);}
+    100%{transform:translate(0,0);}
 }
 </style>
-
 </head>
 
 <body>
@@ -97,16 +127,13 @@ button{
     <source src="https://www.fesliyanstudios.com/play-mp3/4386" type="audio/mpeg">
 </audio>
 
+<audio id="bgMusic" loop preload="auto">
+    <source src="https://www.fesliyanstudios.com/play-mp3/6670" type="audio/mpeg">
+</audio>
+
 <div id="terminal"></div>
 
 <div class="question-box">
-    <h3>
-        Do you love me? ❤️<br>
-        <span style="font-size:12px;color:#aaa;">
-            (Rashmi ❤️ "Eterna" & Chutte)
-        </span>
-    </h3>
-
     <button id="yesBtn">YES 💚</button>
     <button id="noBtn">NO 💔</button>
 </div>
@@ -125,63 +152,170 @@ Detecting: Chutte 💫
 Loading emotions...
 System ready.
 
-STATUS: WAITING FOR YOUR ANSWER ❤️`;
+STATUS: DO YOU LOVE ME? ❤️`;
 
-let i = 0;
-const terminal = document.getElementById("terminal");
-const questionBox = document.querySelector(".question-box");
+let i=0;
+const terminal=document.getElementById("terminal");
+const box=document.querySelector(".question-box");
 
 function type(){
-    if(i < text.length){
-        terminal.innerHTML = text.substring(0,i) + '<span class="cursor"></span>';
+    if(i<text.length){
+        terminal.innerHTML=text.substring(0,i)+'<span class="cursor"></span>';
         i++;
-        setTimeout(type, 25);
-    } else {
-        terminal.innerHTML = text + '<span class="cursor"></span>';
-        questionBox.style.display = "block";
+        setTimeout(type,25);
+    }else{
+        terminal.innerHTML=text;
+        box.style.display="block";
     }
 }
-
 type();
 
-/* 💚 YES BUTTON */
-document.getElementById("yesBtn").onclick = function(){
+/* 💖 VOICE */
+function playLoveVoice(){
+    let msg = new SpeechSynthesisUtterance("I love you rashmi");
 
-    const kiss = document.getElementById("kissSound");
-    kiss.currentTime = 0;
-    kiss.play().catch(()=>{});
+    msg.rate = 0.85;
+    msg.pitch = 1.2;
+    msg.volume = 1;
 
+    let voices = speechSynthesis.getVoices();
+    let female = voices.find(v => v.lang.includes("en"));
+
+    if(female) msg.voice = female;
+
+    speechSynthesis.speak(msg);
+}
+
+/* YES ACTION */
+function triggerYes(){
     terminal.innerHTML =
 `💚 YES RECEIVED
 
 👩 Rashmi (Eterna)
 💫 Chutte approved
-💋 Kiss sent successfully
-
-❤️ LOVE STATUS: FOREVER ACTIVE ♾️`;
-};
-
-/* 💔 NO BUTTON - IMPOSSIBLE TO CLICK */
-const noBtn = document.getElementById("noBtn");
-
-function moveNoBtn(){
-    const maxX = window.innerWidth - 100;
-    const maxY = window.innerHeight - 150;
-
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
+💋 Kiss rain active
+🎶 Music playing
+🗣️ Voice: I love you ❤️
+🎆 Fireworks ON
+❤️ FOREVER ACTIVE ♾️`;
 }
 
-noBtn.addEventListener("mouseover", moveNoBtn);
-noBtn.addEventListener("touchstart", moveNoBtn);
+/* YES CLICK */
+document.getElementById("yesBtn").onclick=function(){
 
-noBtn.addEventListener("click", function(e){
+    playLoveVoice();
+
+    const kiss=document.getElementById("kissSound");
+    const music=document.getElementById("bgMusic");
+
+    kiss.currentTime=0;
+    kiss.play().catch(()=>{});
+
+    music.currentTime=0;
+    music.volume=0.5;
+    music.play().catch(()=>{});
+
+    startKissRain();
+    startTextRain();
+    startFireworks();
+    screenShake();
+
+    triggerYes();
+};
+
+/* NO logic */
+let noAttempts=0;
+
+document.getElementById("noBtn").addEventListener("mouseenter",moveNo);
+
+document.getElementById("noBtn").onclick=function(e){
     e.preventDefault();
-    moveNoBtn();
-});
+    noAttempts++;
+    moveNo();
+
+    if(noAttempts>=1){
+        document.getElementById("yesBtn").click();
+    }
+};
+
+function moveNo(){
+    const btn=document.getElementById("noBtn");
+    const yesBtn=document.getElementById("yesBtn");
+
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*(window.innerWidth-120)+"px";
+    btn.style.top=Math.random()*(window.innerHeight-200)+"px";
+
+    yesBtn.style.transform=`scale(${1+noAttempts*0.4})`;
+}
+
+/* 💋 KISS RAIN */
+function startKissRain(){
+    setInterval(()=>{
+        for(let i=0;i<5;i++){
+            let el=document.createElement("div");
+            el.className="kiss";
+
+            el.innerHTML=["💋","💋💖","🥔💋","💖"][Math.floor(Math.random()*4)];
+            el.style.left=Math.random()*window.innerWidth+"px";
+            el.style.animationDuration=(2+Math.random()*3)+"s";
+
+            document.body.appendChild(el);
+            setTimeout(()=>el.remove(),6000);
+        }
+    },300);
+}
+
+/* 💬 TEXT RAIN */
+function startTextRain(){
+    setInterval(()=>{
+        let el=document.createElement("div");
+        el.className="rainText";
+        el.innerHTML="Ummmmmah 💋 I love you ❤️";
+        el.style.left=Math.random()*window.innerWidth+"px";
+        el.style.animationDuration=(3+Math.random()*3)+"s";
+
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),7000);
+    },500);
+}
+
+/* 🎆 REPEATING FIREWORKS */
+let fireworkInterval;
+
+function startFireworks(){
+
+    if(fireworkInterval) return;
+
+    fireworkInterval=setInterval(()=>{
+
+        for(let i=0;i<20;i++){
+            let f=document.createElement("div");
+            f.className="firework";
+
+            f.style.left=window.innerWidth/2+"px";
+            f.style.top=window.innerHeight/2+"px";
+
+            const angle=Math.random()*2*Math.PI;
+            const radius=80+Math.random()*220;
+
+            f.style.setProperty("--x",Math.cos(angle)*radius+"px");
+            f.style.setProperty("--y",Math.sin(angle)*radius+"px");
+
+            f.style.background=["#ff0","#0f0","#f0f","#0ff","#fff"][Math.floor(Math.random()*5)];
+
+            document.body.appendChild(f);
+            setTimeout(()=>f.remove(),1000);
+        }
+
+    },700);
+}
+
+/* 💥 SHAKE */
+function screenShake(){
+    terminal.classList.add("shake");
+    setTimeout(()=>terminal.classList.remove("shake"),400);
+}
 
 </script>
 
