@@ -1,8 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoveApplication</title>
 
 <style>
@@ -11,27 +11,77 @@ body{
     background:#0d1117;
     color:#00ff88;
     font-family:Consolas,monospace;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    min-height:100vh;
 }
+
+#app{
+    width:100%;
+    max-width:420px;
+    padding:15px;
+}
+
 #terminal{
-    width:700px;
-    max-width:90%;
     background:#161b22;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 0 20px rgba(0,255,136,.25);
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,255,136,.2);
     white-space:pre-wrap;
-    font-size:18px;
+    font-size:14px;
+    min-height:300px;
 }
+
+.question-box{
+    text-align:center;
+    color:#fff;
+    display:none;
+    margin-top:15px;
+    position:relative;
+}
+
+h3{
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    margin-top:10px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#yesBtn{
+    background:#00ff88;
+    color:#000;
+}
+
+/* 💔 NO BUTTON (tiny + escaping) */
+#noBtn{
+    background:#ff4d4d;
+    color:#fff;
+    position:absolute;
+    width:70px;
+    padding:8px;
+    font-size:12px;
+    border-radius:8px;
+    transition:0.1s;
+    left:50%;
+    top:120px;
+}
+
 .cursor{
     display:inline-block;
-    width:10px;
+    width:8px;
     background:#00ff88;
     animation:blink .8s infinite;
 }
+
 @keyframes blink{
     50%{opacity:0;}
 }
@@ -41,7 +91,27 @@ body{
 
 <body>
 
+<div id="app">
+
+<audio id="kissSound" preload="auto">
+    <source src="https://www.fesliyanstudios.com/play-mp3/4386" type="audio/mpeg">
+</audio>
+
 <div id="terminal"></div>
+
+<div class="question-box">
+    <h3>
+        Do you love me? ❤️<br>
+        <span style="font-size:12px;color:#aaa;">
+            (Rashmi ❤️ "Eterna" & Chutte)
+        </span>
+    </h3>
+
+    <button id="yesBtn">YES 💚</button>
+    <button id="noBtn">NO 💔</button>
+</div>
+
+</div>
 
 <script>
 
@@ -50,41 +120,70 @@ const text =
 
 Starting LoveApplication...
 
-Loading modules...
-Loading memories...
-Connecting to Eterna ❤️
-Connection successful.
+Connecting to Rashmi ❤️ (Eterna)
+Detecting: Chutte 💫
+Loading emotions...
+System ready.
 
----------------------------------------
+STATUS: WAITING FOR YOUR ANSWER ❤️`;
 
-Hello, Eterna ❤️
-
-You are the best thing
-that ever happened to me.
-
-Status : RUNNING
-Heart  : ❤️❤️❤️❤️❤️
-Love   : Infinite ♾️
-
-I Love You Forever ❤️`;
-
-let i=0;
-const terminal=document.getElementById("terminal");
+let i = 0;
+const terminal = document.getElementById("terminal");
+const questionBox = document.querySelector(".question-box");
 
 function type(){
-    if(i<text.length){
-        terminal.innerHTML=text.substring(0,i)+'<span class="cursor"></span>';
+    if(i < text.length){
+        terminal.innerHTML = text.substring(0,i) + '<span class="cursor"></span>';
         i++;
-        setTimeout(type,40);
-    }else{
-        terminal.innerHTML=text+'<span class="cursor"></span>';
+        setTimeout(type, 25);
+    } else {
+        terminal.innerHTML = text + '<span class="cursor"></span>';
+        questionBox.style.display = "block";
     }
 }
 
 type();
 
+/* 💚 YES BUTTON */
+document.getElementById("yesBtn").onclick = function(){
+
+    const kiss = document.getElementById("kissSound");
+    kiss.currentTime = 0;
+    kiss.play().catch(()=>{});
+
+    terminal.innerHTML =
+`💚 YES RECEIVED
+
+👩 Rashmi (Eterna)
+💫 Chutte approved
+💋 Kiss sent successfully
+
+❤️ LOVE STATUS: FOREVER ACTIVE ♾️`;
+};
+
+/* 💔 NO BUTTON - IMPOSSIBLE TO CLICK */
+const noBtn = document.getElementById("noBtn");
+
+function moveNoBtn(){
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 150;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+noBtn.addEventListener("mouseover", moveNoBtn);
+noBtn.addEventListener("touchstart", moveNoBtn);
+
+noBtn.addEventListener("click", function(e){
+    e.preventDefault();
+    moveNoBtn();
+});
+
 </script>
 
 </body>
 </html>
-```
