@@ -3,321 +3,453 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LoveApplication</title>
+
+<title>Mistress Love Protocol</title>
 
 <style>
+
 body{
-    margin:0;
-    background:#0d1117;
-    color:#00ff88;
-    font-family:Consolas,monospace;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+margin:0;
+background:#08000f;
+color:#ff66cc;
+font-family:Consolas,monospace;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
 #app{
-    width:100%;
-    max-width:420px;
-    padding:15px;
+width:100%;
+max-width:420px;
+padding:15px;
 }
 
 #terminal{
-    background:#161b22;
-    padding:18px;
-    border-radius:12px;
-    white-space:pre-wrap;
-    font-size:14px;
-    min-height:280px;
+background:#14001f;
+border:1px solid #ff66cc;
+box-shadow:0 0 25px #ff1493;
+padding:20px;
+border-radius:15px;
+white-space:pre-wrap;
+min-height:300px;
+font-size:14px;
 }
 
 .question-box{
-    text-align:center;
-    margin-top:15px;
-    display:none;
+display:none;
+text-align:center;
+margin-top:15px;
 }
+
 
 button{
-    width:100%;
-    padding:14px;
-    margin-top:10px;
-    font-size:16px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    position:relative;
+width:100%;
+padding:15px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+font-size:17px;
+cursor:pointer;
 }
+
 
 #yesBtn{
-    background:#00ff88;
-    color:#000;
-    transition:all 0.3s ease;
+background:#ff66cc;
+color:white;
+box-shadow:0 0 15px #ff66cc;
 }
+
 
 #noBtn{
-    background:#ff4d4d;
-    color:#fff;
+background:#444;
+color:white;
 }
+
 
 .cursor{
-    display:inline-block;
-    width:8px;
-    background:#00ff88;
-    animation:blink .8s infinite;
+display:inline-block;
+width:8px;
+height:15px;
+background:#ff66cc;
+animation:blink .7s infinite;
 }
 
-@keyframes blink{50%{opacity:0;}}
 
-.kiss,.rainText,.firework{
-    position:fixed;
+@keyframes blink{
+50%{opacity:0;}
 }
 
-.kiss{
-    top:-20px;
-    font-size:22px;
-    animation:fall linear forwards;
-    z-index:9999;
+
+.fall{
+position:fixed;
+top:-20px;
+animation:fall linear forwards;
+z-index:999;
 }
 
-.rainText{
-    top:-20px;
-    font-size:16px;
-    color:#fff;
-    font-weight:bold;
-    animation:fall linear forwards;
-    z-index:9998;
-}
 
 @keyframes fall{
-    to{transform:translateY(110vh);opacity:0;}
+
+to{
+transform:translateY(110vh);
+opacity:0;
 }
+
+}
+
 
 .firework{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    z-index:9999;
-    animation:explode 1s ease-out forwards;
+
+position:fixed;
+width:8px;
+height:8px;
+border-radius:50%;
+animation:boom 1s forwards;
+
 }
 
-@keyframes explode{
-    0%{transform:translate(0,0);opacity:1;}
-    100%{transform:translate(var(--x),var(--y));opacity:0;}
+
+@keyframes boom{
+
+to{
+transform:translate(var(--x),var(--y));
+opacity:0;
 }
 
-.shake{animation:shake 0.4s;}
+}
+
+
+.shake{
+animation:shake .4s;
+}
+
 
 @keyframes shake{
-    0%{transform:translate(0,0);}
-    25%{transform:translate(5px,-5px);}
-    50%{transform:translate(-5px,5px);}
-    75%{transform:translate(5px,5px);}
-    100%{transform:translate(0,0);}
+
+25%{transform:translate(5px);}
+50%{transform:translate(-5px);}
+75%{transform:translate(5px);}
+
 }
+
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div id="app">
 
-<audio id="kissSound" preload="auto">
-    <source src="https://www.fesliyanstudios.com/play-mp3/4386" type="audio/mpeg">
+
+<audio id="bgMusic" loop>
+
+<!-- Put your romantic song here -->
+<source src="romantic-song.mp3" type="audio/mpeg">
+
 </audio>
 
-<audio id="bgMusic" loop preload="auto">
-    <source src="https://www.fesliyanstudios.com/play-mp3/6670" type="audio/mpeg">
+
+<audio id="kissSound">
+
+<source src="kiss.mp3" type="audio/mpeg">
+
 </audio>
+
+
 
 <div id="terminal"></div>
 
+
 <div class="question-box">
-    <button id="yesBtn">YES 💚</button>
-    <button id="noBtn">NO 💔</button>
-</div>
+
+<button id="yesBtn">
+YES Mistress 👑❤️
+</button>
+
+
+<button id="noBtn">
+NO 😭
+</button>
+
 
 </div>
+
+
+</div>
+
+
 
 <script>
 
-const text =
-`$ java LoveApplication
 
-Starting LoveApplication...
+const text=
 
-Connecting to Rashmi ❤️ (Eterna)
-Detecting: Chutte 💫
-Loading emotions...
-System ready.
+`$ java HusbandSubmissionProtocol
 
-STATUS: DO YOU LOVE ME? ❤️`;
+
+Starting Private Love System...
+
+
+Connecting to Mistress Rashmi 👑❤️
+
+
+Relationship Mode:
+
+🖤 slave Hubby
+👑 Mistress Wife
+
+
+Loading:
+
+Love ........ OK
+Loyalty .... OK
+Attention .. OK
+Affection .. OK
+
+
+Hubby Status:
+
+READY FOR HIS MISTRESS 💋
+
+
+SYSTEM READY.
+
+
+QUESTION:
+
+Will you keep your slave hubby forever? ❤️`;
+
+
 
 let i=0;
+
 const terminal=document.getElementById("terminal");
+
 const box=document.querySelector(".question-box");
 
+
+
 function type(){
-    if(i<text.length){
-        terminal.innerHTML=text.substring(0,i)+'<span class="cursor"></span>';
-        i++;
-        setTimeout(type,25);
-    }else{
-        terminal.innerHTML=text;
-        box.style.display="block";
-    }
+
+if(i<text.length){
+
+terminal.innerHTML=text.substring(0,i)+
+'<span class="cursor"></span>';
+
+i++;
+
+setTimeout(type,25);
+
 }
+
+else{
+
+terminal.innerHTML=text;
+
+box.style.display="block";
+
+}
+
+}
+
+
 type();
 
-/* 💖 VOICE */
-function playLoveVoice(){
-    let msg = new SpeechSynthesisUtterance("I love you rashmi");
 
-    msg.rate = 0.85;
-    msg.pitch = 1.2;
-    msg.volume = 1;
 
-    let voices = speechSynthesis.getVoices();
-    let female = voices.find(v => v.lang.includes("en"));
 
-    if(female) msg.voice = female;
+// VOICE
 
-    speechSynthesis.speak(msg);
+function loveVoice(){
+
+let msg=new SpeechSynthesisUtterance(
+"Rashmi, my beautiful Mistress, your slave hubby loves you forever."
+);
+
+
+msg.rate=.8;
+
+msg.pitch=1.3;
+
+speechSynthesis.speak(msg);
+
 }
 
-/* YES ACTION */
-function triggerYes(){
-    terminal.innerHTML =
-`💚 YES RECEIVED
 
-👩 Rashmi (Eterna)
-💫 Chutte approved
-💋 Kiss rain active
-🎶 Music playing
-🗣️ Voice: I love you ❤️
-🎆 Fireworks ON
-❤️ FOREVER ACTIVE ♾️`;
-}
 
-/* YES CLICK */
+// YES
+
+
 document.getElementById("yesBtn").onclick=function(){
 
-    playLoveVoice();
 
-    const kiss=document.getElementById("kissSound");
-    const music=document.getElementById("bgMusic");
+loveVoice();
 
-    kiss.currentTime=0;
-    kiss.play().catch(()=>{});
 
-    music.currentTime=0;
-    music.volume=0.5;
-    music.play().catch(()=>{});
+let music=document.getElementById("bgMusic");
 
-    startKissRain();
-    startTextRain();
-    startFireworks();
-    screenShake();
+music.volume=.5;
 
-    triggerYes();
+music.play().catch(()=>{});
+
+
+
+terminal.innerHTML=
+
+`👑 MISTRESS ACCEPTED
+
+
+Welcome Mistress Rashmi ❤️
+
+
+🖤 Subby Hubby Mode: ACTIVE
+
+👑 Mistress Priority: MAXIMUM
+
+💚 Love: INFINITE
+
+💋 Kiss Rain: ON
+
+🎶 Romantic Feeling: ON
+
+🎆 Forever Mode: ENABLED
+
+
+Your hubby belongs to your heart ❤️`;
+
+
+
+kissRain();
+
+fireworks();
+
+terminal.classList.add("shake");
+
+
 };
 
-/* NO logic */
-let noAttempts=0;
 
-document.getElementById("noBtn").addEventListener("mouseenter",moveNo);
 
-document.getElementById("noBtn").onclick=function(e){
-    e.preventDefault();
-    noAttempts++;
-    moveNo();
 
-    if(noAttempts>=1){
-        document.getElementById("yesBtn").click();
-    }
+// NO BUTTON ESCAPE
+
+
+document.getElementById("noBtn").onmouseenter=function(){
+
+this.style.position="absolute";
+
+this.style.left=Math.random()*80+"vw";
+
+this.style.top=Math.random()*80+"vh";
+
+
 };
 
-function moveNo(){
-    const btn=document.getElementById("noBtn");
-    const yesBtn=document.getElementById("yesBtn");
 
-    btn.style.position="absolute";
-    btn.style.left=Math.random()*(window.innerWidth-120)+"px";
-    btn.style.top=Math.random()*(window.innerHeight-200)+"px";
 
-    yesBtn.style.transform=`scale(${1+noAttempts*0.4})`;
+// KISS RAIN
+
+
+function kissRain(){
+
+
+setInterval(()=>{
+
+
+let e=document.createElement("div");
+
+
+e.className="fall";
+
+
+e.innerHTML=[
+"💋",
+"❤️",
+"👑",
+"💕"
+][Math.floor(Math.random()*4)];
+
+
+e.style.left=Math.random()*100+"vw";
+
+e.style.fontSize="25px";
+
+e.style.animationDuration=
+(2+Math.random()*3)+"s";
+
+
+document.body.appendChild(e);
+
+
+setTimeout(()=>e.remove(),5000);
+
+
+},250);
+
+
 }
 
-/* 💋 KISS RAIN */
-function startKissRain(){
-    setInterval(()=>{
-        for(let i=0;i<5;i++){
-            let el=document.createElement("div");
-            el.className="kiss";
 
-            el.innerHTML=["💋","💋💖","🥔💋","💖"][Math.floor(Math.random()*4)];
-            el.style.left=Math.random()*window.innerWidth+"px";
-            el.style.animationDuration=(2+Math.random()*3)+"s";
 
-            document.body.appendChild(el);
-            setTimeout(()=>el.remove(),6000);
-        }
-    },300);
+
+// FIREWORKS
+
+
+function fireworks(){
+
+
+setInterval(()=>{
+
+
+for(let i=0;i<15;i++){
+
+
+let f=document.createElement("div");
+
+f.className="firework";
+
+
+f.style.left="50%";
+
+f.style.top="50%";
+
+
+let a=Math.random()*6.28;
+
+let r=100+Math.random()*200;
+
+
+f.style.setProperty("--x",
+Math.cos(a)*r+"px");
+
+
+f.style.setProperty("--y",
+Math.sin(a)*r+"px");
+
+
+document.body.appendChild(f);
+
+
+setTimeout(()=>f.remove(),1000);
+
+
 }
 
-/* 💬 TEXT RAIN */
-function startTextRain(){
-    setInterval(()=>{
-        let el=document.createElement("div");
-        el.className="rainText";
-        el.innerHTML="Ummmmmah 💋 I love you ❤️";
-        el.style.left=Math.random()*window.innerWidth+"px";
-        el.style.animationDuration=(3+Math.random()*3)+"s";
 
-        document.body.appendChild(el);
-        setTimeout(()=>el.remove(),7000);
-    },500);
+},800);
+
+
 }
 
-/* 🎆 REPEATING FIREWORKS */
-let fireworkInterval;
 
-function startFireworks(){
-
-    if(fireworkInterval) return;
-
-    fireworkInterval=setInterval(()=>{
-
-        for(let i=0;i<20;i++){
-            let f=document.createElement("div");
-            f.className="firework";
-
-            f.style.left=window.innerWidth/2+"px";
-            f.style.top=window.innerHeight/2+"px";
-
-            const angle=Math.random()*2*Math.PI;
-            const radius=80+Math.random()*220;
-
-            f.style.setProperty("--x",Math.cos(angle)*radius+"px");
-            f.style.setProperty("--y",Math.sin(angle)*radius+"px");
-
-            f.style.background=["#ff0","#0f0","#f0f","#0ff","#fff"][Math.floor(Math.random()*5)];
-
-            document.body.appendChild(f);
-            setTimeout(()=>f.remove(),1000);
-        }
-
-    },700);
-}
-
-/* 💥 SHAKE */
-function screenShake(){
-    terminal.classList.add("shake");
-    setTimeout(()=>terminal.classList.remove("shake"),400);
-}
 
 </script>
+
 
 </body>
 </html>
